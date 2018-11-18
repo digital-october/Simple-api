@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Group;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Group;
 
 use App\Http\Requests\API\User\IndexUsers;
 use App\Http\Requests\API\User\StoreUser;
@@ -114,7 +114,7 @@ class UserController extends Controller
         $data = array_except($request->validated(), ['role', 'group']);
 
         if ($request->has('role')) {
-            $role = Role::find($request->get('role'));
+            $role = Role::find($request->role);
             $can_change_role = Auth::user()->can('changeRole', [$user, $role]);
 
             if ($can_change_role) {
